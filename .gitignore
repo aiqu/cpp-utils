@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# temporary files
+*.swo
+*.swp
+
+# cscope, ctag files
+cscope*
+tags
+
+# build files
+/build
