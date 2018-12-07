@@ -15,6 +15,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g")
 set(namespace ${PROJECT_NAME})
 set(include_install_dir "${PROJECT_NAME}")
 
+option(BUILD_TEST "Build test binary" OFF)
+
 add_library(timer
   src/timer.cc
 )
@@ -24,10 +26,12 @@ target_include_directories(timer
   $<INSTALL_INTERFACE:${include_install_dir}>
 )
 
-add_executable(test_timer
-  test/timer.cc
-)
-target_link_libraries(test_timer
-PUBLIC
-  timer
-)
+if (BUILD_TEST)
+  add_executable(test_timer
+    test/timer.cc
+  )
+  target_link_libraries(test_timer
+  PUBLIC
+    timer
+  )
+endif()
