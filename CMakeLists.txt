@@ -17,7 +17,7 @@ set(include_install_dir "${PROJECT_NAME}")
 
 option(BUILD_TEST "Build test binary" OFF)
 
-add_library(timer
+add_library(timer SHARED
   src/timer.cc
 )
 target_include_directories(timer
