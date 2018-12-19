@@ -46,6 +46,28 @@ void Timer<T>::Split(const std::string& description) {
   split_ = now;
 }
 
+template <class T>
+std::vector<std::pair<std::string, T>> Timer<T>::GetRecords() const {
+  const auto now = std::chrono::steady_clock::now();
+  const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
+  std::vector<std::pair<std::string, T>> record(splits_);
+  record.emplace_back(description_, elapsed);
+  return record;
+}
+
+template <class T>
+std::vector<typename T::rep> Timer<T>::GetCounts() const {
+  const auto now = std::chrono::steady_clock::now();
+  const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
+  std::vector<typename T::rep> record;
+  record.reserve(splits_.size() + 1);
+  for (const auto& split : splits_) {
+    record.emplace_back(split.second.count());
+  }
+  record.emplace_back(elapsed.count());
+  return record;
+}
+
 template class Timer<std::chrono::hours>;
 template class Timer<std::chrono::minutes>;
 template class Timer<std::chrono::seconds>;

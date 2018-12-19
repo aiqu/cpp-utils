@@ -13,6 +13,8 @@ class Timer {
   explicit Timer(const std::string& description = "");
   ~Timer();
   void Split(const std::string& description);
+  std::vector<std::pair<std::string, T>> GetRecords() const;
+  std::vector<typename T::rep> GetCounts() const;
   void SetVerbose(bool verbose) { verbose_ = verbose; }
   bool Verbose() const { return verbose_; }
 
