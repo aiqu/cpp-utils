@@ -47,16 +47,18 @@ void Timer<T>::Split(const std::string& description) {
 }
 
 template <class T>
-std::vector<std::pair<std::string, T>> Timer<T>::GetRecords() const {
+std::vector<std::pair<std::string, T>> Timer<T>::GetRecords(const TimerOption& option) const {
   const auto now = std::chrono::steady_clock::now();
   const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
   std::vector<std::pair<std::string, T>> record(splits_);
-  record.emplace_back(description_, elapsed);
+  if (option == TimerOption::IncludeNow) {
+    record.emplace_back(description_, elapsed);
+  }
   return record;
 }
 
 template <class T>
-std::vector<typename T::rep> Timer<T>::GetCounts() const {
+std::vector<typename T::rep> Timer<T>::GetCounts(const TimerOption& option) const {
   const auto now = std::chrono::steady_clock::now();
   const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
   std::vector<typename T::rep> record;
@@ -64,7 +66,9 @@ std::vector<typename T::rep> Timer<T>::GetCounts() const {
   for (const auto& split : splits_) {
     record.emplace_back(split.second.count());
   }
-  record.emplace_back(elapsed.count());
+  if (option == TimerOption::IncludeNow) {
+    record.emplace_back(elapsed.count());
+  }
   return record;
 }
 
