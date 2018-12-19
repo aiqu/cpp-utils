@@ -28,12 +28,14 @@ Timer<T>::Timer(const std::string& description)
 
 template <class T>
 Timer<T>::~Timer() {
-  const auto now = std::chrono::steady_clock::now();
-  const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
-  for (const auto& p : splits_) {
-    std::cout << description_ << ": " << p.first << " took " << p.second.count() << time_suffix_ << "\n";
+  if (verbose_) {
+    const auto now = std::chrono::steady_clock::now();
+    const auto elapsed = std::chrono::duration_cast<T>(now - begin_);
+    for (const auto& p : splits_) {
+      std::cout << description_ << ": " << p.first << " took " << p.second.count() << time_suffix_ << "\n";
+    }
+    std::cout << description_ << ": Total " << elapsed.count() << time_suffix_ << "\n";
   }
-  std::cout << description_ << ": Total " << elapsed.count() << time_suffix_ << "\n";
 }
 
 template <class T>
