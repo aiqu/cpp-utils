@@ -35,3 +35,20 @@ if (BUILD_TEST)
     timer
   )
 endif()
+
+install(
+  TARGETS timer
+  EXPORT timerTargets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
+install(
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+  DESTINATION include
+  FILES_MATCHING PATTERN "*.h"
+)
+install(
+  EXPORT timerTargets
+  NAMESPACE cpp-utils::
+  DESTINATION share/${PROJECT_NAME}/cmake
+)
