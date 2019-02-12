@@ -15,9 +15,10 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g")
 set(namespace ${PROJECT_NAME})
 set(include_install_dir "${PROJECT_NAME}")
 
-option(BUILD_TEST "Build test binary" OFF)
+option(BUILD_TEST "Build test binaries" OFF)
+option(BUILD_SHARED_LIBS "Build a shared library" ON)
 
-add_library(timer SHARED
+add_library(timer
   src/timer.cc
 )
 target_include_directories(timer
